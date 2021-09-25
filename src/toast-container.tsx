@@ -1,11 +1,6 @@
-import React, { Component } from "react";
-import {
-  StyleSheet,
-  ViewStyle,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
-import Toast, { ToastOptions, ToastProps } from "./toast";
+import React, { Component } from 'react';
+import { StyleSheet, ViewStyle, KeyboardAvoidingView, Platform } from 'react-native';
+import Toast, { ToastOptions, ToastProps } from './toast';
 
 export interface Props extends ToastOptions {
   renderToast?(toast: ToastProps): JSX.Element;
@@ -29,7 +24,7 @@ class ToastContainer extends Component<Props, State> {
   }
 
   static defaultProps: Props = {
-    placement: "bottom",
+    placement: 'bottom',
     offset: 10,
     swipeEnabled: true,
   };
@@ -68,15 +63,9 @@ class ToastContainer extends Component<Props, State> {
   /**
    * Updates a toast, To use this create you must pass an id to show method first, then pass it here to update the toast.
    */
-  update = (
-    id: string,
-    message: string | JSX.Element,
-    toastOptions?: ToastOptions
-  ) => {
+  update = (id: string, message: string | JSX.Element, toastOptions?: ToastOptions) => {
     this.setState({
-      toasts: this.state.toasts.map((toast) =>
-        toast.id === id ? { ...toast, message, ...toastOptions } : toast
-      ),
+      toasts: this.state.toasts.map((toast) => (toast.id === id ? { ...toast, message, ...toastOptions } : toast)),
     });
   };
 
@@ -85,9 +74,7 @@ class ToastContainer extends Component<Props, State> {
    */
   hide = (id: string) => {
     this.setState({
-      toasts: this.state.toasts.map((t) =>
-        t.id === id ? { ...t, open: false } : t
-      ),
+      toasts: this.state.toasts.map((t) => (t.id === id ? { ...t, open: false } : t)),
     });
   };
 
@@ -105,17 +92,16 @@ class ToastContainer extends Component<Props, State> {
     let { offset, offsetBottom } = this.props;
     let style: ViewStyle = {
       bottom: offsetBottom || offset,
-      justifyContent: "flex-end",
-      flexDirection: "column",
+      justifyContent: 'flex-end',
+      flexDirection: 'column',
     };
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "position" : undefined}
+        behavior={Platform.OS === 'ios' ? 'position' : undefined}
         style={[styles.container, style]}
-        pointerEvents="box-none"
-      >
+        pointerEvents="box-none">
         {toasts
-          .filter((t) => !t.placement || t.placement === "bottom")
+          .filter((t) => !t.placement || t.placement === 'bottom')
           .map((toast) => (
             <Toast key={toast.id} {...toast} />
           ))}
@@ -128,17 +114,16 @@ class ToastContainer extends Component<Props, State> {
     let { offset, offsetTop } = this.props;
     let style: ViewStyle = {
       top: offsetTop || offset,
-      justifyContent: "flex-start",
-      flexDirection: "column-reverse",
+      justifyContent: 'flex-start',
+      flexDirection: 'column-reverse',
     };
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "position" : undefined}
+        behavior={Platform.OS === 'ios' ? 'position' : undefined}
         style={[styles.container, style]}
-        pointerEvents="box-none"
-      >
+        pointerEvents="box-none">
         {toasts
-          .filter((t) => t.placement === "top")
+          .filter((t) => t.placement === 'top')
           .map((toast) => (
             <Toast key={toast.id} {...toast} />
           ))}
@@ -159,16 +144,17 @@ class ToastContainer extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 0,
-    position: "absolute",
-    width: "100%",
-    maxWidth: "100%",
+    //@ts-ignore
+    position: 'fixed',
+    width: '100%',
+    maxWidth: '100%',
     zIndex: 999999,
     left: 0,
     right: 0,
-    ...(Platform.OS === "web" ? { overflow: "hidden" } : null),
+    ...(Platform.OS === 'web' ? { overflow: 'hidden' } : null),
   },
   message: {
-    color: "#333",
+    color: '#333',
   },
 });
 
